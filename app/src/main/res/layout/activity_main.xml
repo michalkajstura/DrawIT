@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:onClick="turnEraserOn"
+    tools:context=".activities.MainActivity">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
+
+    <com.drawit.DrawView
+        android:id="@+id/my_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/eraser_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+
+    <!--<ImageView-->
+        <!--android:id="@+id/my_image"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/eraser_btn"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.0"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/app_bar" />-->
+
+    <SeekBar
+        android:id="@+id/brightness_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:progressBackgroundTint="@color/colorPrimaryDark"
+        android:thumbTint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/eraser_btn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/round_toggle"
+        android:onClick="turnEraserOn"
+        android:text="ToggleButton"
+        app:layout_constraintBottom_toTopOf="@+id/brightness_bar"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/pickColor"
+        android:src="@drawable/bursh"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:fabCustomSize="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="openColorPicker"
+        app:layout_constraintBottom_toTopOf="@+id/brightness_bar"
+        app:layout_constraintEnd_toStartOf="@+id/eraser_btn"
+        app:layout_constraintStart_toEndOf="@+id/revert_btn"
+        app:layout_constraintTop_toBottomOf="@+id/my_image"
+        app:srcCompat="@color/background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/revert_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:tint="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/brightness_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_image"
+        app:srcCompat="@android:drawable/ic_menu_revert" />
+
+</android.support.constraint.ConstraintLayout>
