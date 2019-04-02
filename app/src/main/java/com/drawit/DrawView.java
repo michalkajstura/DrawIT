@@ -2,6 +2,7 @@ package com.drawit;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -24,6 +25,8 @@ public class DrawView extends AppCompatImageView {
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
     public static final int MAX_BRUSH_SIZE = 100;
     private static final float TOUCH_TOLERANCE = 4;
+    private static final BlurMaskFilter BLUR_EFFECT =
+            new BlurMaskFilter(50, BlurMaskFilter.Blur.NORMAL);
 
     private LinkedList<FingerPath> paths = new LinkedList<>();
     private Path path;
@@ -35,10 +38,8 @@ public class DrawView extends AppCompatImageView {
     private float current_x, current_y;
     private int color;
     private int brushSize;
-    private Context context;
-    private boolean eraserModeOn = false;
-    private int screenHeight;
-    private int screenWidth;
+    private boolean blurOn;
+
 
     public DrawView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -51,7 +52,6 @@ public class DrawView extends AppCompatImageView {
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setXfermode(null);
         paint.setAlpha(0xff);
-        this.context = context;
     }
 
     public DrawView(Context context) {
@@ -59,8 +59,8 @@ public class DrawView extends AppCompatImageView {
     }
 
     public void init(DisplayMetrics metrics) {
-        screenHeight = metrics.heightPixels;
-        screenWidth = metrics.widthPixels;
+        int screenHeight = metrics.heightPixels;
+        int screenWidth = metrics.widthPixels;
         bitmap = Bitmap.createBitmap(screenWidth, screenHeight, Bitmap.Config.ARGB_8888);
         paintingCanvas = new Canvas(bitmap);
 
@@ -72,10 +72,7 @@ public class DrawView extends AppCompatImageView {
     protected void onDraw(Canvas canvas) {
         canvas.save();
         refreshCanvas();
-
-        if (!eraserModeOn)
-            canvas.drawBitmap(bitmap, 0, 0, bitmapPaint);
-
+        canvas.drawBitmap(bitmap, 0, 0, bitmapPaint);
         canvas.restore();
     }
 
@@ -88,7 +85,10 @@ public class DrawView extends AppCompatImageView {
         for (FingerPath fp : paths) {
             paint.setColor(fp.getColor());
             paint.setStrokeWidth(fp.getWidth());
-            paint.setMaskFilter(null);
+            if (fp.isBlurOn())
+                paint.setMaskFilter(BLUR_EFFECT);
+            else
+                paint.setMaskFilter(null);
 
             paintingCanvas.drawPath(fp.path, paint);
         }
@@ -96,7 +96,7 @@ public class DrawView extends AppCompatImageView {
 
     private void touchStart(float x, float y) {
         path = new Path();
-        FingerPath fingerPath = new FingerPath(color, brushSize, path);
+        FingerPath fingerPath = new FingerPath(color, brushSize, path, blurOn);
         paths.add(fingerPath);
 
         path.reset();
@@ -162,12 +162,21 @@ public class DrawView extends AppCompatImageView {
     public void setImageBitmap(Bitmap bm) {
         super.setImageBitmap(bm);
         imageBitmap = bm.copy(Bitmap.Config.ARGB_8888, true);
-        paintingCanvas.setBitmap(imageBitmap);
+        paintingCanvas.drawBitmap(imageBitmap,0, 0, bitmapPaint);
+        refreshCanvas();
     }
 
     public void revertDraw() {
         if (!paths.isEmpty())
             paths.removeLast();
         refreshCanvas();
+    }
+
+    public void blurOn() {
+        blurOn = true;
+    }
+
+    public void blurOff() {
+        blurOn = false;
     }
 }

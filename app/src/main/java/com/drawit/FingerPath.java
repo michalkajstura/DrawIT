@@ -6,12 +6,14 @@ public class FingerPath {
 
     private int color;
     private int width;
+    private boolean blurOn;
     public Path path;
 
-    public FingerPath(int color, int width, Path path) {
+    public FingerPath(int color, int width, Path path, boolean blurOn) {
         this.color = color;
         this.width = width;
         this.path = path;
+        this.blurOn = blurOn;
     }
 
     public int getColor() {
@@ -24,5 +26,9 @@ public class FingerPath {
 
     public Path getPath() {
         return path;
+    }
+
+    public boolean isBlurOn() {
+        return blurOn;
     }
 }

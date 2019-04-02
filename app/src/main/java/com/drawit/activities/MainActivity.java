@@ -89,6 +89,17 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton revert = findViewById(R.id.revert_btn);
         revert.setOnClickListener(view -> drawView.revertDraw());
+
+        ToggleButton blur = findViewById(R.id.blur_btn);
+        blur.setOnCheckedChangeListener(
+                (toggleButton, isChecked) -> {
+                    if (isChecked)
+                        drawView.blurOn();
+                    else
+                        drawView.blurOff();
+                }
+        );
+
     }
 
     private void openGallery() {
@@ -135,5 +146,4 @@ public class MainActivity extends AppCompatActivity {
                 });
         colorPicker.show();
     }
-
 }
