@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">ImageFilters</string>
+    <string name="app_name">DrawIt</string>
+    <string name="save_img">Save</string>
+    <string name="open_ing">Choose from gallery</string>
+    <string name="goto_gallery">Gallery</string>
+    <string name="grid_view">Grid view</string>
+    <string name="list_view">Grid view</string>
+
+    <string-array name="spinner_items">
+        <item>"Grid view"</item>
+        <item>"List view"</item>
+    </string-array>
+
 </resources>

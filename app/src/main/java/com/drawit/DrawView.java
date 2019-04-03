@@ -2,6 +2,7 @@ package com.drawit;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -26,13 +27,14 @@ public class DrawView extends AppCompatImageView {
     public static final int MAX_BRUSH_SIZE = 100;
     private static final float TOUCH_TOLERANCE = 4;
     private static final BlurMaskFilter BLUR_EFFECT =
-            new BlurMaskFilter(50, BlurMaskFilter.Blur.NORMAL);
+            new BlurMaskFilter(25, BlurMaskFilter.Blur.NORMAL);
 
     private LinkedList<FingerPath> paths = new LinkedList<>();
     private Path path;
     private Paint paint;
     private Bitmap bitmap;
     private Bitmap imageBitmap;
+    private boolean imageIsSet;
     private Canvas paintingCanvas;
     private Paint bitmapPaint = new Paint(Paint.DITHER_FLAG);
     private float current_x, current_y;
@@ -63,6 +65,7 @@ public class DrawView extends AppCompatImageView {
         int screenWidth = metrics.widthPixels;
         bitmap = Bitmap.createBitmap(screenWidth, screenHeight, Bitmap.Config.ARGB_8888);
         paintingCanvas = new Canvas(bitmap);
+        setDrawingCacheEnabled(true);
 
         color = DEFAULT_COLOR;
         brushSize = BRUSH_SIZE;
@@ -77,8 +80,9 @@ public class DrawView extends AppCompatImageView {
     }
 
     private void refreshCanvas() {
-        if (!Objects.isNull(imageBitmap))
+        if (imageBitmap != null)
             paintingCanvas.drawBitmap(imageBitmap, 0, 0, bitmapPaint);
+//            paintingCanvas.setBitmap(imageBitmap);
         else
             paintingCanvas.drawColor(DEFAULT_BG_COLOR);
 
@@ -163,6 +167,8 @@ public class DrawView extends AppCompatImageView {
         super.setImageBitmap(bm);
         imageBitmap = bm.copy(Bitmap.Config.ARGB_8888, true);
         paintingCanvas.drawBitmap(imageBitmap,0, 0, bitmapPaint);
+        imageIsSet = true;
+//        bitmap = bm.copy(Bitmap.Config.ARGB_8888, true);
         refreshCanvas();
     }
 
@@ -178,5 +184,10 @@ public class DrawView extends AppCompatImageView {
 
     public void blurOff() {
         blurOn = false;
+    }
+
+    public Bitmap getBitmap() {
+        refreshCanvas();
+        return bitmap;
     }
 }

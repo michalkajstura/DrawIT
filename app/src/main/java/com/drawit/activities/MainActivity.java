@@ -1,5 +1,8 @@
 package com.drawit.activities;
 
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -8,16 +11,20 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
@@ -26,12 +33,17 @@ import com.bumptech.glide.request.transition.Transition;
 import com.drawit.DrawView;
 import com.drawit.R;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Objects;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String IMAGE_DIR = "images";
+    private static final String TAG = "Main Activity";
     private static final int PICK_IMAGE = 1;
 
     private DrawView drawView;
@@ -47,7 +59,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_open_photo) {
             openGallery();
+        } else if (item.getItemId() == R.id.action_save_photo) {
+            saveImage();
+        } else if (item.getItemId() == R.id.action_go_to_gallery) {
+            Intent gotoGallery = new Intent(this, PictureGallery.class);
+            startActivity(gotoGallery);
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -107,13 +125,55 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(gallery, PICK_IMAGE);
     }
 
+    private void saveImage() {
+        // Gets title from alert dialog and saves the image to the internal storage
+        getTitleFromUserAndSave();
+    }
+
+    private void getTitleFromUserAndSave() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final EditText userInput = new EditText(this);
+        userInput.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setTitle("Title of your creation");
+        builder.setView(userInput);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", ((dialog, which) -> {
+            String currentImageTitle = userInput.getText().toString();
+            saveImageToStorage(currentImageTitle);
+            }));
+
+        builder.setNegativeButton("Cancel", ((dialog, which) -> dialog.cancel()));
+        builder.show();
+    }
+    private void saveImageToStorage(String imageTitle) {
+        ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
+        File directory = contextWrapper.getDir(IMAGE_DIR, Context.MODE_PRIVATE);
+        File image = new File(directory, imageTitle);
+
+        if (image.exists()) {
+            Toast.makeText(this, imageTitle + " already exists", Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
+
+        try (FileOutputStream output = new FileOutputStream(image)) {
+            Bitmap bitmap = drawView.getBitmap();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
+            Toast.makeText(this, imageTitle + " saved", Toast.LENGTH_SHORT)
+                    .show();
+        } catch (IOException ex) {
+            Log.e(TAG, "Error occurred while creating file: " + imageTitle);
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE && !Objects.isNull(data)) {
-
             Uri imageUri = data.getData();
             drawView = findViewById(R.id.my_image);
+
             // Set scaled and cropped image's bitmap to drawView
             Glide.with(this)
                     .asBitmap()
