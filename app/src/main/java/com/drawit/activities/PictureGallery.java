@@ -1,40 +1,35 @@
 package com.drawit.activities;
 
 import android.content.Context;
-import android.content.ContextWrapper;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
+import com.drawit.FileConverter;
+import com.drawit.ImageGridAdapter;
 import com.drawit.ImageListAdapter;
 import com.drawit.R;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-public class PictureGallery extends AppCompatActivity {
+
+public class PictureGallery extends FragmentActivity {
 
     public static final String TAG = "Picture Gallery";
-    private final int LIST_VIEW = 1;
-    private final int GRID_VIEW = 0;
+    public static final String APP_DATA = "app_data";
+    public static final String VIEW_MODE = "view_mode";
+    private final int LIST_VIEW = 0;
+    private final int GRID_VIEW = 1;
 
 
     @Override
@@ -54,17 +49,35 @@ public class PictureGallery extends AppCompatActivity {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chooseMode.setAdapter(spinnerAdapter);
 
+        // Get saved files
+        FileConverter converter = new FileConverter(this);
+        List<Bitmap> images = converter.getImagesFromStorage();
+
+        // GridView
+        ImageGridAdapter gridAdapter =
+                new ImageGridAdapter(this, images);
+        GridView gridView = findViewById(R.id.image_grid);
+        gridView.setAdapter(gridAdapter);
+
+        // ListView
+        ImageListAdapter listAdapter =
+                new ImageListAdapter(this, converter);
+        ListView listView = findViewById(R.id.image_list);
+        listView.setAdapter(listAdapter);
+
+        chooseMode.setSelection(getViewModePreferences());
         chooseMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                FragmentTransaction transaction = getSupportFragmentManager()
-                        .beginTransaction();
                 if (position == LIST_VIEW) {
-                    transaction.replace(R.id.placeholder, new ListFragment());
+                    listView.setVisibility(View.VISIBLE);
+                    gridView.setVisibility(View.GONE);
+                    setViewModePreferences(LIST_VIEW);
                 } else if (position == GRID_VIEW) {
-                    transaction.replace(R.id.placeholder, new GridFragment());
+                    gridView.setVisibility(View.VISIBLE);
+                    listView.setVisibility(View.GONE);
+                    setViewModePreferences(GRID_VIEW);
                 }
-                transaction.commit();
             }
 
             @Override
@@ -72,5 +85,20 @@ public class PictureGallery extends AppCompatActivity {
             }
         });
     }
+
+    private int getViewModePreferences() {
+        SharedPreferences preferences
+                = getSharedPreferences(APP_DATA, MODE_PRIVATE);
+        return preferences.getInt(VIEW_MODE, 0);
+    }
+
+    private void setViewModePreferences(int viewMode) {
+         SharedPreferences preferences
+                = getSharedPreferences(APP_DATA, MODE_PRIVATE);
+         preferences.edit()
+                 .putInt(VIEW_MODE, viewMode)
+                 .apply();
+    }
+
 }
 

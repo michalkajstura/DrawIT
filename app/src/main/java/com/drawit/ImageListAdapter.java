@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,16 +17,19 @@ public class ImageListAdapter extends BaseAdapter {
     private class ImageListViewItem {
         TextView title;
         ImageView imageView;
+        Button button;
     }
 
     private List<String> filenames;
     private List<Bitmap> images;
     private Context context;
+    private FileConverter manager;
 
-    public ImageListAdapter(Context context, List<Bitmap> images, List<String> filenames) {
-        this.images = images;
+    public ImageListAdapter(Context context, FileConverter manager) {
         this.context = context;
-        this.filenames = filenames;
+        this.manager = manager;
+        this.images = manager.getImagesFromStorage();
+        this.filenames = manager.getFilenames();
     }
 
     @Override
@@ -54,6 +58,8 @@ public class ImageListAdapter extends BaseAdapter {
             listViewItem.title = convertView.findViewById(R.id.row_title);
             listViewItem.imageView = convertView.findViewById(R.id.row_image);
             listViewItem.imageView.setImageBitmap(images.get(position));
+            listViewItem.button = convertView.findViewById(R.id.delete_btn);
+            listViewItem.button.setOnClickListener(v -> onDeleteItem(position));
             convertView.setTag(listViewItem);
         } else {
             listViewItem = (ImageListViewItem) convertView.getTag();
@@ -62,5 +68,12 @@ public class ImageListAdapter extends BaseAdapter {
         String title = filenames.get(position);
         listViewItem.title.setText(title);
         return convertView;
+    }
+
+    private void onDeleteItem(int position) {
+        manager.deleteImage(position);
+        images = manager.getImagesFromStorage();
+        filenames = manager.getFilenames();
+        notifyDataSetChanged();
     }
 }

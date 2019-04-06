@@ -42,6 +42,9 @@ public class ImageGridAdapter extends BaseAdapter {
         if (convertView == null) {
             imageView = new ImageView(context);
             imageView.setLayoutParams(new GridView.LayoutParams(IMAGE_SIZE, IMAGE_SIZE));
+//            int width = images.get(position).getWidth();
+//            int height = images.get(position).getHeight();
+//            imageView.setLayoutParams(new GridView.LayoutParams(width, height));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         } else {
             imageView = (ImageView) convertView;

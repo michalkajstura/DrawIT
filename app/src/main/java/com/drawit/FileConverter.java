@@ -29,9 +29,7 @@ public class FileConverter {
     }
 
     public List<Bitmap> getImagesFromStorage() {
-        ContextWrapper wrapper = new ContextWrapper(context);
-        File directory = wrapper.getDir(MainActivity.IMAGE_DIR, Context.MODE_PRIVATE);
-        File[] files = directory.listFiles();
+        File[] files = getFiles();
 
         filenames = new ArrayList<>();
         // Extract bitmaps from files
@@ -40,6 +38,12 @@ public class FileConverter {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());
+    }
+
+    private File[] getFiles() {
+        ContextWrapper wrapper = new ContextWrapper(context);
+        File directory = wrapper.getDir(MainActivity.IMAGE_DIR, Context.MODE_PRIVATE);
+        return directory.listFiles();
     }
 
     private Optional<Bitmap> decodeFile(File file) {
@@ -64,5 +68,19 @@ public class FileConverter {
 
     public List<String> getFilenames() {
         return filenames;
+    }
+
+    public void deleteImage(int position) {
+        File[] files = getFiles();
+        if (position < 0 || position >= files.length)
+            throw new IllegalArgumentException("Positon: " + position);
+        File toDelete = files[position];
+        if (toDelete.delete()) {
+             Toast.makeText(context, toDelete.getName() + " deleted", Toast.LENGTH_SHORT)
+                    .show();
+        } else {
+              Toast.makeText(context, "Can't delete " + toDelete.getName(), Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
 }

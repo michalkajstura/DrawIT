@@ -7,8 +7,8 @@
     <string name="list_view">Grid view</string>
 
     <string-array name="spinner_items">
-        <item>"Grid view"</item>
         <item>"List view"</item>
+        <item>"Grid view"</item>
     </string-array>
 
 </resources>
