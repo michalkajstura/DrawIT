@@ -20,16 +20,14 @@ public class ImageListAdapter extends BaseAdapter {
         Button button;
     }
 
-    private List<String> filenames;
-    private List<Bitmap> images;
+    private List<BitmapImage> images;
     private Context context;
-    private FileConverter manager;
+    private SavedImageManager manager;
 
-    public ImageListAdapter(Context context, FileConverter manager) {
+    public ImageListAdapter(Context context, SavedImageManager manager) {
         this.context = context;
         this.manager = manager;
         this.images = manager.getImagesFromStorage();
-        this.filenames = manager.getFilenames();
     }
 
     @Override
@@ -57,7 +55,9 @@ public class ImageListAdapter extends BaseAdapter {
             listViewItem = new ImageListViewItem();
             listViewItem.title = convertView.findViewById(R.id.row_title);
             listViewItem.imageView = convertView.findViewById(R.id.row_image);
-            listViewItem.imageView.setImageBitmap(images.get(position));
+            Bitmap bitmap = images.get(position)
+                    .getBitmapImage();
+            listViewItem.imageView.setImageBitmap(bitmap);
             listViewItem.button = convertView.findViewById(R.id.delete_btn);
             listViewItem.button.setOnClickListener(v -> onDeleteItem(position));
             convertView.setTag(listViewItem);
@@ -65,7 +65,8 @@ public class ImageListAdapter extends BaseAdapter {
             listViewItem = (ImageListViewItem) convertView.getTag();
         }
 
-        String title = filenames.get(position);
+        String title = images.get(position)
+                .getTitle();
         listViewItem.title.setText(title);
         return convertView;
     }
@@ -73,7 +74,6 @@ public class ImageListAdapter extends BaseAdapter {
     private void onDeleteItem(int position) {
         manager.deleteImage(position);
         images = manager.getImagesFromStorage();
-        filenames = manager.getFilenames();
         notifyDataSetChanged();
     }
 }

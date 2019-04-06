@@ -13,10 +13,10 @@ import java.util.List;
 public class ImageGridAdapter extends BaseAdapter {
 
     private Context context;
-    private List<Bitmap> images;
+    private List<BitmapImage> images;
     private static final int IMAGE_SIZE = 300;
 
-    public ImageGridAdapter(Context context, List<Bitmap> images) {
+    public ImageGridAdapter(Context context, List<BitmapImage> images) {
         this.context = context;
         this.images = images;
     }
@@ -42,14 +42,14 @@ public class ImageGridAdapter extends BaseAdapter {
         if (convertView == null) {
             imageView = new ImageView(context);
             imageView.setLayoutParams(new GridView.LayoutParams(IMAGE_SIZE, IMAGE_SIZE));
-//            int width = images.get(position).getWidth();
-//            int height = images.get(position).getHeight();
-//            imageView.setLayoutParams(new GridView.LayoutParams(width, height));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         } else {
             imageView = (ImageView) convertView;
         }
-        imageView.setImageBitmap(images.get(position));
+
+        Bitmap bitmap = images.get(position)
+                .getBitmapImage();
+        imageView.setImageBitmap(bitmap);
         return imageView;
     }
 }

@@ -1,12 +1,9 @@
 package com.drawit.activities;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,7 +12,8 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import com.drawit.FileConverter;
+import com.drawit.BitmapImage;
+import com.drawit.SavedImageManager;
 import com.drawit.ImageGridAdapter;
 import com.drawit.ImageListAdapter;
 import com.drawit.R;
@@ -50,8 +48,8 @@ public class PictureGallery extends FragmentActivity {
         chooseMode.setAdapter(spinnerAdapter);
 
         // Get saved files
-        FileConverter converter = new FileConverter(this);
-        List<Bitmap> images = converter.getImagesFromStorage();
+        SavedImageManager converter = new SavedImageManager(this);
+        List<BitmapImage> images = converter.getImagesFromStorage();
 
         // GridView
         ImageGridAdapter gridAdapter =

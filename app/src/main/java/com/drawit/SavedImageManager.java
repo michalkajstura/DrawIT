@@ -20,18 +20,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class FileConverter {
+public class SavedImageManager {
     private Context context;
-    private List<String> filenames;
 
-    public FileConverter(Context context) {
+    public SavedImageManager(Context context) {
         this.context = context;
     }
 
-    public List<Bitmap> getImagesFromStorage() {
+    public List<BitmapImage> getImagesFromStorage() {
         File[] files = getFiles();
 
-        filenames = new ArrayList<>();
         // Extract bitmaps from files
         return Arrays.stream(files)
                 .map(this::decodeFile)
@@ -46,14 +44,14 @@ public class FileConverter {
         return directory.listFiles();
     }
 
-    private Optional<Bitmap> decodeFile(File file) {
+    private Optional<BitmapImage> decodeFile(File file) {
         try (FileInputStream input = new FileInputStream(file)) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             Bitmap bitmap = BitmapFactory.decodeStream(input, null, options);
             if (bitmap != null) {
-                filenames.add(file.getName());
-                return Optional.of(bitmap);
+                BitmapImage image = new BitmapImage(bitmap, file.getName());
+                return Optional.of(image);
             } else {
                 Optional.empty();
             }
@@ -64,10 +62,6 @@ public class FileConverter {
             Log.e(PictureGallery.TAG, "Error occurred while opening: " + file.getName(), ex);
         }
         return Optional.empty();
-    }
-
-    public List<String> getFilenames() {
-        return filenames;
     }
 
     public void deleteImage(int position) {
