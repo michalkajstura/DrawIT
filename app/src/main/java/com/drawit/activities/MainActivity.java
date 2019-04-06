@@ -2,7 +2,6 @@ package com.drawit.activities;
 
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -30,7 +29,7 @@ import android.widget.ToggleButton;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.drawit.DrawView;
+import com.drawit.utils.DrawView;
 import com.drawit.R;
 
 import java.io.File;

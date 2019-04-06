@@ -1,15 +1,12 @@
-package com.drawit;
+package com.drawit.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.support.v7.widget.AppCompatImageView;
@@ -17,8 +14,6 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
 
 public class DrawView extends AppCompatImageView {
     public static int BRUSH_SIZE = 20;

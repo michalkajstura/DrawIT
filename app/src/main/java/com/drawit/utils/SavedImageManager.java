@@ -1,4 +1,4 @@
-package com.drawit;
+package com.drawit.utils;
 
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -9,12 +9,12 @@ import android.widget.Toast;
 
 import com.drawit.activities.MainActivity;
 import com.drawit.activities.PictureGallery;
+import com.drawit.utils.BitmapImage;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;

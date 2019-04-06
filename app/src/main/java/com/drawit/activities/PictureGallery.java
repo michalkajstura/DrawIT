@@ -1,7 +1,6 @@
 package com.drawit.activities;
 
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -12,10 +11,10 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import com.drawit.BitmapImage;
-import com.drawit.SavedImageManager;
-import com.drawit.ImageGridAdapter;
-import com.drawit.ImageListAdapter;
+import com.drawit.utils.BitmapImage;
+import com.drawit.utils.SavedImageManager;
+import com.drawit.adapters.ImageGridAdapter;
+import com.drawit.adapters.ImageListAdapter;
 import com.drawit.R;
 
 import java.util.List;

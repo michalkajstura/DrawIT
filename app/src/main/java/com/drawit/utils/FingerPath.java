@@ -1,4 +1,4 @@
-package com.drawit;
+package com.drawit.utils;
 
 import android.graphics.Path;
 

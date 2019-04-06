@@ -1,4 +1,4 @@
-package com.drawit;
+package com.drawit.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,6 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.drawit.utils.BitmapImage;
+import com.drawit.R;
+import com.drawit.utils.SavedImageManager;
 
 import java.util.List;
 
