@@ -67,7 +67,7 @@ public class SavedImageManager {
     public void deleteImage(int position) {
         File[] files = getFiles();
         if (position < 0 || position >= files.length)
-            throw new IllegalArgumentException("Positon: " + position);
+            throw new IllegalArgumentException("Position: " + position);
         File toDelete = files[position];
         if (toDelete.delete()) {
              Toast.makeText(context, toDelete.getName() + " deleted", Toast.LENGTH_SHORT)

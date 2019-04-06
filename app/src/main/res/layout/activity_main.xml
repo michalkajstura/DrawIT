@@ -25,21 +25,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
-    <!--<ImageView-->
-        <!--android:id="@+id/my_image"-->
-        <!--android:scaleType="centerCrop"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:layout_marginBottom="8dp"-->
-        <!--app:layout_constraintBottom_toTopOf="@+id/eraser_btn"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintHorizontal_bias="0.0"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/app_bar" />-->
-
     <SeekBar
         android:id="@+id/brightness_bar"
         android:layout_width="0dp"
@@ -47,8 +32,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:progressBackgroundTint="@color/colorPrimaryDark"
         android:thumbTint="@color/colorPrimary"
+        android:progressBackgroundTint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -69,7 +55,7 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/pickColor"
-        android:src="@drawable/bursh"
+        android:src="@drawable/color_picker"
         android:layout_width="60dp"
         android:layout_height="60dp"
         app:fabCustomSize="60dp"
@@ -92,6 +78,9 @@
         android:layout_marginTop="8dp"
         android:clickable="true"
         android:tint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
+        android:background="@color/colorAccent"
+        app:rippleColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toTopOf="@+id/brightness_bar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_image"

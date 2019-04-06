@@ -5,6 +5,7 @@
     <string name="goto_gallery">Gallery</string>
     <string name="grid_view">Grid view</string>
     <string name="list_view">Grid view</string>
+    <string name="clear_all">Clear</string>
 
     <string-array name="spinner_items">
         <item>"List view"</item>

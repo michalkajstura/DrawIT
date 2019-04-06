@@ -29,14 +29,12 @@ public class DrawView extends AppCompatImageView {
     private Paint paint;
     private Bitmap bitmap;
     private Bitmap imageBitmap;
-    private boolean imageIsSet;
     private Canvas paintingCanvas;
     private Paint bitmapPaint = new Paint(Paint.DITHER_FLAG);
     private float current_x, current_y;
     private int color;
     private int brushSize;
     private boolean blurOn;
-
 
     public DrawView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -162,7 +160,6 @@ public class DrawView extends AppCompatImageView {
         super.setImageBitmap(bm);
         imageBitmap = bm.copy(Bitmap.Config.ARGB_8888, true);
         paintingCanvas.drawBitmap(imageBitmap,0, 0, bitmapPaint);
-        imageIsSet = true;
 //        bitmap = bm.copy(Bitmap.Config.ARGB_8888, true);
         refreshCanvas();
     }
@@ -184,5 +181,10 @@ public class DrawView extends AppCompatImageView {
     public Bitmap getBitmap() {
         refreshCanvas();
         return bitmap;
+    }
+
+    public void clearAll() {
+        imageBitmap = null;
+        paths.clear();
     }
 }

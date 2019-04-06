@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.action_go_to_gallery) {
             Intent gotoGallery = new Intent(this, PictureGallery.class);
             startActivity(gotoGallery);
+        } else if (item.getItemId() == R.id.action_clear) {
+            drawView.clearAll();
         }
 
         return super.onOptionsItemSelected(item);
