@@ -95,7 +95,6 @@ public class DrawView extends AppCompatImageView {
         path = new Path();
         FingerPath fingerPath = new FingerPath(color, brushSize, path, blurOn);
         paths.add(fingerPath);
-
         path.reset();
         path.moveTo(x, y);
 
@@ -186,5 +185,6 @@ public class DrawView extends AppCompatImageView {
     public void clearAll() {
         imageBitmap = null;
         paths.clear();
+        refreshCanvas();
     }
 }

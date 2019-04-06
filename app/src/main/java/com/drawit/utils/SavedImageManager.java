@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.drawit.BuildConfig;
 import com.drawit.activities.MainActivity;
 import com.drawit.activities.PictureGallery;
 import com.drawit.utils.BitmapImage;
@@ -76,5 +79,17 @@ public class SavedImageManager {
               Toast.makeText(context, "Can't delete " + toDelete.getName(), Toast.LENGTH_SHORT)
                     .show();
         }
+    }
+
+    public Uri getImageUri(int position) {
+        File[] files = getFiles();
+        if (position < 0 || position >= files.length)
+            throw new IllegalArgumentException("Position: " + position);
+        File file = files[position];
+        Uri imageUri = FileProvider.
+                getUriForFile(context, BuildConfig.APPLICATION_ID,
+                        file);
+        return imageUri;
+//        return Uri.fromFile(file);
     }
 }

@@ -119,6 +119,17 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            if (type.startsWith("image/")) {
+                Uri imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                if (imageUri != null)
+                    loadImageIntoDrawView(imageUri);
+            }
+        }
     }
 
     private void openGallery() {
@@ -173,21 +184,25 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE && !Objects.isNull(data)) {
             Uri imageUri = data.getData();
-            drawView = findViewById(R.id.my_image);
-
-            // Set scaled and cropped image's bitmap to drawView
-            Glide.with(this)
-                    .asBitmap()
-                    .override(drawView.getWidth(), drawView.getHeight())
-                    .centerCrop()
-                    .load(imageUri)
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                            drawView.setImageBitmap(resource);
-                        }
-                    });
+            loadImageIntoDrawView(imageUri);
         }
+    }
+
+    private void loadImageIntoDrawView(Uri imageUri) {
+        drawView = findViewById(R.id.my_image);
+
+        // Set scaled and cropped image's bitmap to drawView
+        Glide.with(this)
+                .asBitmap()
+                .override(drawView.getWidth(), drawView.getHeight())
+                .centerCrop()
+                .load(imageUri)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        drawView.setImageBitmap(resource);
+                    }
+                });
     }
 
     public void openColorPicker(View view) {
