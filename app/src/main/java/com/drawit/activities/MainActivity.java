@@ -1,7 +1,5 @@
 package com.drawit.activities;
 
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -164,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
         if (!directory.exists()) {
             directory.mkdirs();
         }
+
         File image = new File(directory, imageTitle);
 
         if (image.exists()) {

@@ -1,7 +1,6 @@
 package com.drawit.utils;
 
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -79,6 +78,11 @@ public class SavedImageManager {
               Toast.makeText(context, "Can't delete " + toDelete.getName(), Toast.LENGTH_SHORT)
                     .show();
         }
+    }
+
+    public void deleteAllImages() {
+        Arrays.stream(getFiles())
+                .forEach(File::delete);
     }
 
     public Uri getImageUri(int position) {

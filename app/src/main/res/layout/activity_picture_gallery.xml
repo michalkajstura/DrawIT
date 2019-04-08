@@ -8,11 +8,7 @@
 
     <include
         android:id="@+id/app_bar"
-        layout="@layout/app_bar"
-        android:layout_width="409dp"
-        android:layout_height="51dp"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="5dp" />
+        layout="@layout/app_bar" />
 
     <GridView
         android:id="@+id/image_grid"

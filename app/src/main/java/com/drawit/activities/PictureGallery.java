@@ -1,9 +1,13 @@
 package com.drawit.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -95,6 +99,24 @@ public class PictureGallery extends FragmentActivity {
          preferences.edit()
                  .putInt(VIEW_MODE, viewMode)
                  .apply();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.gallery_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_delete_all) {
+            SavedImageManager manager = new SavedImageManager(this);
+            manager.deleteAllImages();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }
