@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.drawit.BuildConfig;
 import com.drawit.activities.MainActivity;
 import com.drawit.activities.PictureGallery;
-import com.drawit.utils.BitmapImage;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,8 +41,9 @@ public class SavedImageManager {
     }
 
     private File[] getFiles() {
-        ContextWrapper wrapper = new ContextWrapper(context);
-        File directory = wrapper.getDir(MainActivity.IMAGE_DIR, Context.MODE_PRIVATE);
+//        ContextWrapper wrapper = new ContextWrapper(context);
+//        File directory = wrapper.getDir(MainActivity.IMAGE_DIR, Context.MODE_PRIVATE);
+        File directory = new File(context.getFilesDir(), MainActivity.IMAGE_DIR);
         return directory.listFiles();
     }
 

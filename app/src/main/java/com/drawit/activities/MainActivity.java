@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         drawView= findViewById(R.id.my_image);
         DisplayMetrics metrics = new DisplayMetrics();
@@ -159,8 +160,10 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
     private void saveImageToStorage(String imageTitle) {
-        ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
-        File directory = contextWrapper.getDir(IMAGE_DIR, Context.MODE_PRIVATE);
+        File directory = new File(getFilesDir(), IMAGE_DIR);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
         File image = new File(directory, imageTitle);
 
         if (image.exists()) {
