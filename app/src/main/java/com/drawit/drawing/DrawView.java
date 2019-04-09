@@ -1,4 +1,4 @@
-package com.drawit.utils;
+package com.drawit.drawing;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -75,7 +75,6 @@ public class DrawView extends AppCompatImageView {
     private void refreshCanvas() {
         if (imageBitmap != null)
             paintingCanvas.drawBitmap(imageBitmap, 0, 0, bitmapPaint);
-//            paintingCanvas.setBitmap(imageBitmap);
         else
             paintingCanvas.drawColor(DEFAULT_BG_COLOR);
 
@@ -158,8 +157,6 @@ public class DrawView extends AppCompatImageView {
     public void setImageBitmap(Bitmap bm) {
         super.setImageBitmap(bm);
         imageBitmap = bm.copy(Bitmap.Config.ARGB_8888, true);
-        paintingCanvas.drawBitmap(imageBitmap,0, 0, bitmapPaint);
-//        bitmap = bm.copy(Bitmap.Config.ARGB_8888, true);
         refreshCanvas();
     }
 

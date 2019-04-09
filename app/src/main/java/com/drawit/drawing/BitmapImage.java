@@ -1,4 +1,4 @@
-package com.drawit.utils;
+package com.drawit.drawing;
 
 import android.graphics.Bitmap;
 

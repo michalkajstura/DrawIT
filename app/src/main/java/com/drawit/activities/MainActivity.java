@@ -29,7 +29,7 @@ import android.widget.ToggleButton;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.drawit.utils.DrawView;
+import com.drawit.drawing.DrawView;
 import com.drawit.R;
 
 import java.io.File;

@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.drawit.utils.BitmapImage;
+import com.drawit.drawing.BitmapImage;
 
 import java.util.List;
 

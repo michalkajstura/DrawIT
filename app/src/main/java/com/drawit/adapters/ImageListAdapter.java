@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.drawit.utils.BitmapImage;
+import com.drawit.drawing.BitmapImage;
 import com.drawit.R;
 import com.drawit.utils.SavedImageManager;
 

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.drawit.BuildConfig;
 import com.drawit.activities.MainActivity;
 import com.drawit.activities.PictureGallery;
+import com.drawit.drawing.BitmapImage;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -94,9 +95,8 @@ public class SavedImageManager {
         if (position < 0 || position >= files.length)
             throw new IllegalArgumentException("Position: " + position);
         File file = files[position];
-        Uri imageUri = FileProvider.
+        return FileProvider.
                 getUriForFile(context, BuildConfig.APPLICATION_ID,
                         file);
-        return imageUri;
     }
 }

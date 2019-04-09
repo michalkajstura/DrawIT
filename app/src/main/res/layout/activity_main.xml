@@ -11,7 +11,7 @@
         android:id="@+id/app_bar"
         layout="@layout/app_bar" />
 
-    <com.drawit.utils.DrawView
+    <com.drawit.drawing.DrawView
         android:id="@+id/my_image"
         android:layout_width="0dp"
         android:layout_height="0dp"

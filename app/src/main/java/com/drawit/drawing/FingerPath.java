@@ -1,4 +1,4 @@
-package com.drawit.utils;
+package com.drawit.drawing;
 
 import android.graphics.Path;
 
@@ -22,10 +22,6 @@ public class FingerPath {
 
     public int getWidth() {
         return width;
-    }
-
-    public Path getPath() {
-        return path;
     }
 
     public boolean isBlurOn() {
