@@ -17,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,11 +33,14 @@ public class SavedImageManager {
         File[] files = getFiles();
 
         // Extract bitmaps from files
-        return Arrays.stream(files)
-                .map(this::decodeFile)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());
+        if (files != null)
+            return Arrays.stream(files)
+                    .map(this::decodeFile)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toList());
+        else
+            return Collections.emptyList();
     }
 
     private File[] getFiles() {
@@ -94,6 +98,5 @@ public class SavedImageManager {
                 getUriForFile(context, BuildConfig.APPLICATION_ID,
                         file);
         return imageUri;
-//        return Uri.fromFile(file);
     }
 }

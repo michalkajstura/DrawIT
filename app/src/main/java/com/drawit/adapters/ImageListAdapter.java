@@ -96,7 +96,12 @@ public class ImageListAdapter extends BaseAdapter {
         shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
         shareIntent.setType("image/png");
         shareIntent.setFlags(FLAG_GRANT_READ_URI_PERMISSION | FLAG_GRANT_WRITE_URI_PERMISSION);
-        context.startActivity(shareIntent);
 
+        String title = context.getResources()
+                .getString(R.string.choose_title);
+        Intent chooser = Intent.createChooser(shareIntent, title);
+        if (shareIntent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(chooser);
+        }
     }
 }

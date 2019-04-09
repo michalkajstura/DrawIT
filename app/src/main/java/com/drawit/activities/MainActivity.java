@@ -3,6 +3,8 @@ package com.drawit.activities;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -193,18 +195,17 @@ public class MainActivity extends AppCompatActivity {
     private void loadImageIntoDrawView(Uri imageUri) {
         drawView = findViewById(R.id.my_image);
 
-        // Set scaled and cropped image's bitmap to drawView
         Glide.with(this)
-                .asBitmap()
-                .override(drawView.getWidth(), drawView.getHeight())
-                .centerCrop()
-                .load(imageUri)
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        drawView.setImageBitmap(resource);
-                    }
-                });
+            .load(imageUri)
+            .override(drawView.getWidth(), drawView.getHeight())
+            .centerCrop()
+            .into(new SimpleTarget<Drawable>() {
+                @Override
+                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                    Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
+                    drawView.setImageBitmap(bitmap);
+                }
+            });
     }
 
     public void openColorPicker(View view) {

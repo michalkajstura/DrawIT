@@ -6,6 +6,7 @@
     <string name="grid_view">Grid view</string>
     <string name="list_view">Grid view</string>
     <string name="clear_all">Clear</string>
+    <string name="choose_title">Choose one of these</string>
 
     <string-array name="spinner_items">
         <item>"List view"</item>
